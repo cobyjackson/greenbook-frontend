@@ -1,0 +1,64 @@
+{
+  "sys": {
+    "color": {
+      "surface": {
+        "primary": { "value": "#F4F1EA" },
+        "secondary": { "value": "#ECE8DF" }
+      },
+      "text": {
+        "primary": { "value": "#1E2B22" },
+        "secondary": { "value": "#8C877F" },
+        "muted": { "value": "rgba(58,51,44,0.5)" }
+      },
+      "divider": { "primary": { "value": "rgba(58,51,44,0.15)" } }
+    },
+    "spacing": {
+      "2": { "value": 8 },
+      "4": { "value": 16 },
+      "6": { "value": 24 },
+      "8": { "value": 32 },
+      "10": { "value": 40 },
+      "12": { "value": 48 },
+      "safeBottom": { "value": 73 }
+    },
+    "radius": {
+      "sm": { "value": 8 },
+      "md": { "value": 12 }
+    },
+    "border": {
+      "hairline": { "value": 1 }
+    },
+    "typography": {
+      "family": {
+        "serif": { "value": "Playfair Display" },
+        "sans": { "value": "Inter" }
+      },
+      "weight": {
+        "regular": { "value": 400 },
+        "medium": { "value": 500 }
+      },
+      "hero": {
+        "size": { "value": 44 },
+        "lineHeight": { "value": 46 },
+        "letterSpacing": { "value": -0.5 }
+      },
+      "section": {
+        "size": { "value": 28 },
+        "lineHeight": { "value": 31 }
+      },
+      "courseTitle": {
+        "size": { "value": 22 },
+        "lineHeight": { "value": 26 }
+      },
+      "body": {
+        "size": { "value": 14 },
+        "lineHeight": { "value": 20 }
+      },
+      "meta": {
+        "size": { "value": 12 },
+        "lineHeight": { "value": 16 },
+        "letterSpacing": { "value": 0.24 }
+      }
+    }
+  }
+}

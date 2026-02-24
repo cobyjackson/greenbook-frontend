@@ -5,11 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:tokens": "node scripts/build-tokens.mjs",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lint:tokens": "node scripts/audit-tailwind.mjs"
   },
   "dependencies": {
-    "next": "16.0.3",
+    "next": "^16.1.6",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },

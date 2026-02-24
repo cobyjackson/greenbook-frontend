@@ -1,0 +1,34 @@
+:root {
+  --sys-color-surface-primary: rgb(244 241 234);
+  --sys-color-surface-secondary: #ECE8DF;
+  --sys-color-text-primary: #1E2B22;
+  --sys-color-text-secondary: #8C877F;
+  --sys-color-text-muted: rgba(58,51,44,0.5);
+  --sys-color-divider-primary: rgba(58,51,44,0.15);
+  --sys-spacing-2: 8px;
+  --sys-spacing-4: 16px;
+  --sys-spacing-6: 24px;
+  --sys-spacing-8: 32px;
+  --sys-spacing-10: 40px;
+  --sys-spacing-12: 48px;
+  --sys-spacing-safeBottom: 73px;
+  --sys-radius-sm: 8px;
+  --sys-radius-md: 12px;
+  --sys-border-hairline: 1px;
+  --sys-typography-family-serif: Playfair Display;
+  --sys-typography-family-sans: Inter;
+  --sys-typography-weight-regular: 400;
+  --sys-typography-weight-medium: 500;
+  --sys-typography-hero-size: 44px;
+  --sys-typography-hero-lineHeight: 46px;
+  --sys-typography-hero-letterSpacing: -0.5px;
+  --sys-typography-section-size: 28px;
+  --sys-typography-section-lineHeight: 31px;
+  --sys-typography-courseTitle-size: 22px;
+  --sys-typography-courseTitle-lineHeight: 26px;
+  --sys-typography-body-size: 14px;
+  --sys-typography-body-lineHeight: 20px;
+  --sys-typography-meta-size: 12px;
+  --sys-typography-meta-lineHeight: 16px;
+  --sys-typography-meta-letterSpacing: 0.24px;
+}
