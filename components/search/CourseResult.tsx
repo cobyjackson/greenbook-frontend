@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import type { CourseResult as CourseResultData } from "@/lib/api";
 import Divider from "@/components/ui/Divider";

@@ -12,17 +12,6 @@ function formatYards(value: number) {
   return new Intl.NumberFormat("en-US").format(value);
 }
 
-function getCourseMetrics(id: string) {
-  const metrics: Record<string, { par: number; yards: number }> = {
-    "pine-valley": { par: 70, yards: 7057 },
-    "bethpage-black": { par: 71, yards: 7468 },
-    "bandon-dunes": { par: 72, yards: 6732 },
-    "shinnecock-hills": { par: 70, yards: 7445 },
-  };
-
-  return metrics[id] ?? { par: 72, yards: 7000 };
-}
-
 function DetailSection({
   title,
   body,
@@ -84,6 +73,7 @@ export default function CourseDetailPage() {
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
   const [detail, setDetail] = useState<CourseDetail | null | undefined>(undefined);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -94,9 +84,16 @@ export default function CourseDetailPage() {
         return;
       }
 
-      const nextDetail = await getCourseDetail(id);
-      if (cancelled) return;
-      setDetail(nextDetail);
+      setError(null);
+      try {
+        const nextDetail = await getCourseDetail(id);
+        if (cancelled) return;
+        setDetail(nextDetail);
+      } catch {
+        if (cancelled) return;
+        setError("Unable to load course details right now.");
+        setDetail(null);
+      }
     }
 
     loadDetail();
@@ -122,17 +119,15 @@ export default function CourseDetailPage() {
         </button>
         <div className="mt-12">
           <Text variant="section" className="font-semibold">
-            Course not found
+            {error ? "Course details unavailable" : "Course not found"}
           </Text>
           <Text variant="body" className="mt-3 text-text-muted">
-            This course page is not available yet.
+            {error ? error : "This course page is not available yet."}
           </Text>
         </div>
       </SafeArea>
     );
   }
-
-  const metrics = getCourseMetrics(detail.id);
 
   return (
     <SafeArea disableBottomPadding className="mx-auto max-w-3xl py-12">
@@ -155,7 +150,7 @@ export default function CourseDetailPage() {
 
       <div className="mt-8">
         <Text variant="body" className="text-text-secondary">
-          {detail.city}, {detail.state} · Par {metrics.par} · {formatYards(metrics.yards)} yards
+          {detail.city}, {detail.state} · Par {detail.par ?? 72} · {formatYards(detail.yards ?? 7000)} yards
         </Text>
       </div>
 

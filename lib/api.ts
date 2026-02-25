@@ -1,16 +1,6 @@
 "use client";
 
-import {
-  feedEntries,
-  slugify,
-  userProfile,
-} from "./mock-data";
-import type {
-  CourseDetail,
-  CourseResult,
-  FeedEntry,
-  UserProfile,
-} from "./mock-data";
+import type { CourseDetail, CourseResult, FeedEntry, UserProfile } from "./types";
 import { apiGet } from "./api-client";
 import {
   adaptCourseDetail,
@@ -18,21 +8,16 @@ import {
   type BackendCourseDetailResponse,
   type BackendCourseSearchResponse,
 } from "./adapters/course";
+import { adaptFeed, type BackendFeedPageResponse } from "./adapters/feed";
+import { adaptUserProfile, type BackendMeResponse } from "./adapters/profile";
+import { adaptPlayedCourses, type BackendPlayedPageResponse } from "./adapters/played";
+import { adaptWishlistCourses, type BackendWishlistPageResponse } from "./adapters/wishlist";
 
-export type { CourseDetail, CourseResult, FeedEntry, UserProfile };
-export { slugify };
-
-const DELAY_MS = 500;
-
-function delay(ms: number) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
+export type { CourseDetail, CourseResult, FeedEntry, UserProfile } from "./types";
 
 export async function getFeed(): Promise<FeedEntry[]> {
-  await delay(DELAY_MS);
-  return feedEntries;
+  const response = await apiGet<BackendFeedPageResponse>("/feed");
+  return adaptFeed(response);
 }
 
 export async function searchCourses(query: string): Promise<CourseResult[]> {
@@ -46,8 +31,17 @@ export async function searchCourses(query: string): Promise<CourseResult[]> {
 }
 
 export async function getProfile(): Promise<UserProfile> {
-  await delay(DELAY_MS);
-  return userProfile;
+  const [me, wishlistPage, playedPage] = await Promise.all([
+    apiGet<BackendMeResponse>("/me"),
+    apiGet<BackendWishlistPageResponse>("/me/wishlist"),
+    apiGet<BackendPlayedPageResponse>("/me/courseplay"),
+  ]);
+
+  return adaptUserProfile({
+    me,
+    wishlist: adaptWishlistCourses(wishlistPage),
+    played: adaptPlayedCourses(playedPage),
+  });
 }
 
 export async function getCourseDetail(id: string): Promise<CourseDetail | null> {
