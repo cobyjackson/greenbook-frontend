@@ -1,6 +1,6 @@
+"use client";
+
 import {
-  courseDetails,
-  courseResults,
   feedEntries,
   slugify,
   userProfile,
@@ -11,6 +11,13 @@ import type {
   FeedEntry,
   UserProfile,
 } from "./mock-data";
+import { apiGet } from "./api-client";
+import {
+  adaptCourseDetail,
+  adaptCourseSearchResults,
+  type BackendCourseDetailResponse,
+  type BackendCourseSearchResponse,
+} from "./adapters/course";
 
 export type { CourseDetail, CourseResult, FeedEntry, UserProfile };
 export { slugify };
@@ -29,15 +36,13 @@ export async function getFeed(): Promise<FeedEntry[]> {
 }
 
 export async function searchCourses(query: string): Promise<CourseResult[]> {
-  await delay(DELAY_MS);
+  const normalized = query.trim();
+  if (!normalized) return [];
 
-  const normalized = query.trim().toLowerCase();
-  if (!normalized) return courseResults;
-
-  return courseResults.filter((course) => {
-    const haystack = `${course.name} ${course.city} ${course.state} ${course.meta}`.toLowerCase();
-    return haystack.includes(normalized);
-  });
+  const response = await apiGet<BackendCourseSearchResponse>(
+    `/courses/search?query=${encodeURIComponent(normalized)}`,
+  );
+  return adaptCourseSearchResults(response);
 }
 
 export async function getProfile(): Promise<UserProfile> {
@@ -46,7 +51,16 @@ export async function getProfile(): Promise<UserProfile> {
 }
 
 export async function getCourseDetail(id: string): Promise<CourseDetail | null> {
-  await delay(DELAY_MS);
-  const normalizedId = slugify(id);
-  return courseDetails.find((detail) => detail.id === normalizedId) ?? null;
+  const normalizedId = id.trim();
+  if (!normalizedId) return null;
+
+  try {
+    const response = await apiGet<BackendCourseDetailResponse>(`/courses/${encodeURIComponent(normalizedId)}`);
+    return adaptCourseDetail(response);
+  } catch (error) {
+    if (error instanceof Error && "status" in error && (error as { status?: number }).status === 404) {
+      return null;
+    }
+    throw error;
+  }
 }

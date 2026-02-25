@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 import { getProfile, type CourseResult, type UserProfile } from "@/lib/api";
 import ProfileHeader from "@/components/profile/ProfileHeader";
@@ -131,6 +132,13 @@ export default function ProfilePage() {
 
     content = (
       <>
+        <div className="pt-2">
+          <Link href="/login" className="inline-flex items-center">
+            <Text variant="body" as="span" className="text-text-secondary underline underline-offset-2">
+              Dev login
+            </Text>
+          </Link>
+        </div>
         <ProfileHeader
           name={resolvedProfile.name}
           username={resolvedProfile.username}
