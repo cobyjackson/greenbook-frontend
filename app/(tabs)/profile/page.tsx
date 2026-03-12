@@ -9,6 +9,7 @@ import ErrorView from "@/components/ui/ErrorView";
 import SafeArea from "@/components/ui/SafeArea";
 import Skeleton from "@/components/ui/Skeleton";
 import Text from "@/components/ui/Text";
+import Icon from "@/components/ui/Icon";
 
 type ProfileTab = "played" | "wishlist";
 
@@ -20,26 +21,44 @@ function ProfileCourseRow({
   showDivider: boolean;
 }) {
   return (
-    <article className="w-full py-8">
-      <div className="flex flex-col gap-y-2">
-        <Text variant="courseTitle" className="font-medium">
-          {course.name}
-        </Text>
-        <Text variant="body">
-          {course.city}, {course.state}
-        </Text>
-      </div>
-      {showDivider ? <Divider className="mt-8" /> : null}
+    <article className="w-full py-5 group">
+      <Link href={`/course/${course.id}`} className="block">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-col gap-y-2">
+            <Text
+              variant="courseTitle"
+              className="font-medium group-hover:underline underline-offset-2"
+            >
+              {course.name}
+            </Text>
+            <div className="flex items-center gap-1.5">
+              <Icon name="map-pin" size={14} className="text-text-muted shrink-0" />
+              <Text variant="body" className="text-text-secondary">
+                {course.city}, {course.state}
+              </Text>
+            </div>
+          </div>
+          <Icon
+            name="arrow-right"
+            size={16}
+            className="text-text-muted mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+          />
+        </div>
+      </Link>
+      {showDivider ? <Divider className="mt-5" /> : null}
     </article>
   );
 }
 
 function ProfileHeaderSkeleton() {
   return (
-    <section className="w-full pt-2">
-      <div className="flex flex-col gap-y-2">
-        <Skeleton className="h-8 w-52 rounded-sm" />
-        <Skeleton className="h-4 w-20 rounded-sm" />
+    <section className="w-full pt-4">
+      <div className="flex items-center gap-4">
+        <Skeleton className="h-16 w-16 rounded-full" />
+        <div className="flex flex-col gap-y-2">
+          <Skeleton className="h-7 w-40 rounded-sm" />
+          <Skeleton className="h-5 w-24 rounded-sm" />
+        </div>
       </div>
 
       <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
@@ -47,28 +66,24 @@ function ProfileHeaderSkeleton() {
         <Skeleton className="h-5 w-28 rounded-sm" />
       </div>
 
-      <div className="mt-8 flex items-end gap-6">
-        <div className="border-b-2 border-transparent pb-2">
-          <Skeleton className="h-5 w-14 rounded-sm" />
-        </div>
-        <div className="border-b-2 border-transparent pb-2">
-          <Skeleton className="h-5 w-16 rounded-sm" />
-        </div>
+      <div className="mt-8 flex items-center gap-3">
+        <Skeleton className="h-10 w-28 rounded-lg" />
+        <Skeleton className="h-10 w-28 rounded-lg" />
       </div>
 
-      <Divider className="mt-2" />
+      <Divider className="mt-6" />
     </section>
   );
 }
 
 function ProfileCourseRowSkeleton({ showDivider }: { showDivider: boolean }) {
   return (
-    <article className="w-full py-8">
+    <article className="w-full py-5">
       <div className="flex flex-col gap-y-2">
         <Skeleton className="h-6 w-52 rounded-sm" />
         <Skeleton className="h-5 w-32 rounded-sm" />
       </div>
-      {showDivider ? <Divider className="mt-8" /> : null}
+      {showDivider ? <Divider className="mt-5" /> : null}
     </article>
   );
 }
@@ -132,18 +147,13 @@ export default function ProfilePage() {
 
     content = (
       <>
-        <div className="pt-2">
-          <Link href="/login" className="inline-flex items-center">
-            <Text variant="body" as="span" className="text-text-secondary underline underline-offset-2">
-              Dev login
-            </Text>
-          </Link>
-        </div>
         <ProfileHeader
           name={resolvedProfile.name}
           username={resolvedProfile.username}
           followers={resolvedProfile.played.length * 19}
           following={resolvedProfile.wishlist.length * 7}
+          playedCount={resolvedProfile.played.length}
+          wishlistCount={resolvedProfile.wishlist.length}
           activeTab={activeTab}
           onTabChange={setActiveTab}
         />
@@ -158,15 +168,35 @@ export default function ProfilePage() {
               />
             ))
           ) : (
-            <div className="flex min-h-56 flex-col items-center justify-center gap-y-2 text-center">
+            <div className="flex min-h-56 flex-col items-center justify-center gap-y-3 text-center">
+              <div
+                className="w-12 h-12 rounded-full flex items-center justify-center"
+                style={{ backgroundColor: "var(--sys-color-surface-secondary)" }}
+              >
+                <Icon
+                  name={activeTab === "played" ? "check" : "bookmark"}
+                  size={24}
+                  className="text-text-muted"
+                />
+              </div>
               <Text variant="courseTitle">
-                {activeTab === "played" ? "No courses played" : "No courses wishlisted"}
+                {activeTab === "played" ? "No courses played yet" : "No courses wishlisted"}
               </Text>
-              <Text variant="body" className="text-text-muted">
+              <Text variant="body" className="text-text-muted max-w-xs">
                 {activeTab === "played"
-                  ? "Your rounds will appear here."
-                  : "Courses you want to play will appear here."}
+                  ? "Start tracking your golf journey by marking courses you've played."
+                  : "Save courses you dream of playing to your wishlist."}
               </Text>
+              <Link
+                href="/search"
+                className="mt-2 inline-flex items-center gap-2 font-medium text-text-primary underline underline-offset-4 hover:text-text-secondary transition-colors"
+                style={{
+                  fontFamily: "var(--sys-typography-family-sans)",
+                  fontSize: "var(--sys-typography-body-size)",
+                }}
+              >
+                Discover courses
+              </Link>
             </div>
           )}
         </div>
@@ -174,5 +204,5 @@ export default function ProfilePage() {
     );
   }
 
-  return <SafeArea className="mx-auto max-w-3xl py-12">{content}</SafeArea>;
+  return <SafeArea className="mx-auto max-w-3xl py-8">{content}</SafeArea>;
 }

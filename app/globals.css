@@ -1,8 +1,45 @@
 @import "tailwindcss";
 @import "../styles/tokens.css";
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--sys-color-surface-primary);
   color: var(--sys-color-text-primary);
   font-family: var(--sys-typography-family-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection color */
+::selection {
+  background-color: rgba(45, 90, 61, 0.2);
+  color: var(--sys-color-text-primary);
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--sys-color-accent-primary);
+  outline-offset: 2px;
+}
+
+/* Input autofill styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--sys-color-surface-secondary) inset;
+  -webkit-text-fill-color: var(--sys-color-text-primary);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Hide search input cancel button */
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
 }

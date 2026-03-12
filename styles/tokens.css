@@ -1,19 +1,26 @@
 :root {
   --sys-color-surface-primary: rgb(244 241 234);
   --sys-color-surface-secondary: #ECE8DF;
+  --sys-color-surface-elevated: #FFFFFF;
   --sys-color-text-primary: #1E2B22;
   --sys-color-text-secondary: #8C877F;
   --sys-color-text-muted: rgba(58,51,44,0.5);
   --sys-color-divider-primary: rgba(58,51,44,0.15);
+  --sys-color-accent-primary: #2D5A3D;
+  --sys-color-accent-secondary: #4A7C5B;
+  --sys-color-status-played: #2D5A3D;
+  --sys-color-status-wishlisted: #8B6914;
   --sys-spacing-2: 8px;
   --sys-spacing-4: 16px;
   --sys-spacing-6: 24px;
   --sys-spacing-8: 32px;
   --sys-spacing-10: 40px;
   --sys-spacing-12: 48px;
-  --sys-spacing-safeBottom: 73px;
+  --sys-spacing-safeBottom: 88px;
   --sys-radius-sm: 8px;
   --sys-radius-md: 12px;
+  --sys-radius-lg: 16px;
+  --sys-radius-full: 9999px;
   --sys-border-hairline: 1px;
   --sys-typography-family-serif: Playfair Display;
   --sys-typography-family-sans: Inter;

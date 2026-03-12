@@ -5,6 +5,7 @@ export const tokens = {
     surface: {
       primary: "var(--sys-color-surface-primary)",
       secondary: "var(--sys-color-surface-secondary)",
+      elevated: "var(--sys-color-surface-elevated)",
     },
     text: {
       primary: "var(--sys-color-text-primary)",
@@ -12,6 +13,14 @@ export const tokens = {
       muted: "var(--sys-color-text-muted)",
     },
     divider: { primary: "var(--sys-color-divider-primary)" },
+    accent: {
+      primary: "var(--sys-color-accent-primary)",
+      secondary: "var(--sys-color-accent-secondary)",
+    },
+    status: {
+      played: "var(--sys-color-status-played)",
+      wishlisted: "var(--sys-color-status-wishlisted)",
+    },
   },
   spacing: {
     2: "var(--sys-spacing-2)",
@@ -25,6 +34,8 @@ export const tokens = {
   borderRadius: {
     sm: "var(--sys-radius-sm)",
     md: "var(--sys-radius-md)",
+    lg: "var(--sys-radius-lg)",
+    full: "var(--sys-radius-full)",
   },
   letterSpacing: {
     hero: "var(--sys-typography-hero-letterSpacing)",

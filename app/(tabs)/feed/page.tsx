@@ -8,22 +8,26 @@ import SafeArea from "@/components/ui/SafeArea";
 import Skeleton from "@/components/ui/Skeleton";
 import Text from "@/components/ui/Text";
 import Divider from "@/components/ui/Divider";
+import Icon from "@/components/ui/Icon";
 
 function FeedItemSkeleton({ showDivider }: { showDivider: boolean }) {
   return (
-    <article className="w-full py-8">
-      <div className="flex flex-col gap-y-2">
-        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <Skeleton className="h-6 w-28 rounded-sm" />
-          <Skeleton className="h-4 w-16 rounded-sm" />
+    <article className="w-full py-6">
+      <div className="flex flex-col gap-y-3">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <Skeleton className="h-5 w-24 rounded-sm" />
+          </div>
+          <Skeleton className="h-6 w-20 rounded-full" />
         </div>
-        <Skeleton className="h-8 w-56 rounded-sm" />
+        <Skeleton className="h-8 w-3/4 rounded-sm" />
         <div className="flex justify-between gap-4">
           <Skeleton className="h-5 w-32 rounded-sm" />
-          <Skeleton className="h-4 w-12 rounded-sm" />
+          <Skeleton className="h-4 w-16 rounded-sm" />
         </div>
       </div>
-      {showDivider ? <Divider className="mt-8" /> : null}
+      {showDivider ? <Divider className="mt-6" /> : null}
     </article>
   );
 }
@@ -57,11 +61,22 @@ export default function FeedPage() {
   }, [retryKey]);
 
   return (
-    <SafeArea className="mx-auto max-w-3xl py-12">
-      <Text variant="hero" as="h1" className="font-semibold">
-        Feed
-      </Text>
-      <div className="mt-10">
+    <SafeArea className="mx-auto max-w-3xl py-8">
+      <header className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span
+            className="inline-flex items-center justify-center w-10 h-10 rounded-full"
+            style={{ backgroundColor: "var(--sys-color-surface-secondary)" }}
+          >
+            <Icon name="flag" size={20} className="text-text-primary" />
+          </span>
+          <Text variant="section" as="h1" className="font-semibold">
+            GreenBook
+          </Text>
+        </div>
+      </header>
+      <Divider className="mt-6" />
+      <div className="mt-4">
         {error ? (
           <ErrorView
             message={error}
@@ -70,16 +85,17 @@ export default function FeedPage() {
         ) : entries ? (
           entries.length > 0 ? (
             entries.map((entry, index) => (
-              <FeedItem
-                key={entry.id}
-                username={entry.username}
-                action={entry.action}
-                courseName={entry.courseName}
-                city={entry.city}
-                state={entry.state}
-                timestamp={entry.timestamp}
-                showDivider={index < entries.length - 1}
-              />
+            <FeedItem
+              key={entry.id}
+              username={entry.username}
+              action={entry.action}
+              courseName={entry.courseName}
+              courseId={entry.courseId}
+              city={entry.city}
+              state={entry.state}
+              timestamp={entry.timestamp}
+              showDivider={index < entries.length - 1}
+            />
             ))
           ) : (
             <div className="flex min-h-56 flex-col items-center justify-center gap-y-2 text-center">
